@@ -16,7 +16,7 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import { Pointer } from "lucide-react";
 
 const studentsData = [
-  { id: 1, name: "Suhel Ali", course: "ADCA", mobile: "9999999999", reg: "REG12345" },
+  { id: 1, name: "Md Suhel", course: "ADCA", mobile: "9999999999", reg: "REG12345" },
   { id: 2, name: "Ayesha Khan", course: "DCA", mobile: "8888888888", reg: "REG12346" },
   { id: 3, name: "Rohit Kumar", course: "Tally Prime", mobile: "7777777777", reg: "REG12347" },
   { id: 4, name: "Neha Sharma", course: "ADCA", mobile: "6666666666", reg: "REG12348" },
