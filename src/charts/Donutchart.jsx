@@ -24,7 +24,7 @@ const COLORS = [
   "#4CAB29",
 ];
 
-const DonutChart = () => {
+const DonutChart = ({data_is = data, data_Key = "value", name_Key = "name"}) => {
   return (
     <div className="w-full h-[420px]  rounded-2xl p-4">
       
@@ -36,16 +36,16 @@ const DonutChart = () => {
         <PieChart>
           
           <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
+            data={data_is}
+            dataKey={data_Key}
+            nameKey={name_Key}
             cx="50%"
             cy="45%"
             outerRadius={100}
             innerRadius={60} // donut hole
             paddingAngle={2}
           >
-            {data.map((entry, index) => (
+            {data_is.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}

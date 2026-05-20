@@ -47,19 +47,22 @@ const Piechart = ({
   cy = '50%',
   outerRadius = 110,
   innerRadius = 40,
+  data_is = data,
+  data_key = "amount",
+  name_key = "st_name"
 }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <PieChart width={width} height={height}>
       <Pie
-        data={data}
+        data={data_is}
         cx={cx}
         cy={cy}
         outerRadius={outerRadius}
         innerRadius={innerRadius}
-        dataKey="amount"
-        nameKey="st_name"
+        dataKey={data_key}
+        nameKey={name_key}
         stroke="none"
         label
         activeIndex={activeIndex}

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   FiChevronDown,
   FiUploadCloud,
@@ -10,23 +10,34 @@ import {
 import { HiOutlineAcademicCap } from "react-icons/hi";
 
 
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackCircle } from "react-icons/io5";
+import { useForm  } from "react-hook-form";
+import Loaderspin from "../components/Loader"
+import toast,{Toaster} from "react-hot-toast";
+
 const CLASSES = [
-  "Class 10 - Science",
-  "Class 11 - Commerce",
-  "Class 12 - Arts",
-  "B.Tech - CSE",
+  "ADCA",
+  "DCFA",
+  "DCA",
+  "CCC",
+  "O Level",
 ];
 const EXAMS = ["Half Yearly Exam", "Annual Exam", "Unit Test 1", "Unit Test 2"];
 const SESSIONS = ["2022-23", "2023-24", "2024-25", "2025-26"];
 
-const PREVIEW_DATA = [
-  { roll: 101, name: "Rohit Kumar", sub1: 78, sub2: 85, total: 163, result: "Pass" },
-  { roll: 102, name: "Neha Sharma", sub1: 88, sub2: 92, total: 180, result: "Pass" },
-  { roll: 103, name: "Arjun Mehta", sub1: 45, sub2: 38, total: 83,  result: "Fail" },
-];
+
+
+
+
+
+
 /* ── Reusable Input Field ───────────────────────────────────────────── */
 function InputField({ label, value, onChange, placeholder, type = "text", icon: Icon, required, name }) {
   const [focused, setFocused] = useState(false);
+
+
+
 
   return (
     <div className="mb-4">
@@ -41,10 +52,11 @@ function InputField({ label, value, onChange, placeholder, type = "text", icon: 
               ${focused ? "text-teal-500" : "text-teal-300"}`}
           />
         )}
+      
         <input
           type={type}
           value={value}
-          name= {name}
+        
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           onFocus={() => setFocused(true)}
@@ -90,6 +102,30 @@ export default function UploadResult() {
   const [loading,  setLoading]  = useState(false);
   const [toast,    setToast]    = useState(null);
   const fileRef = useRef();
+  const navigate = useNavigate()
+     const {
+    register,
+    watch,
+    getValues,
+    handleSubmit,
+    setValue,
+    formState: {isSubmitting, errors },
+    reset
+  } = useForm();
+ 
+     // calculate percentage 
+  const total = watch("total_mark");
+const obtain = watch("obtain_mark");
+
+
+
+useEffect(() => {
+  if (total && obtain) {
+    const per = ((obtain / total) * 100).toFixed(2);
+    setValue("percentage", per);
+  }
+}, [total, obtain]);
+
 
   const showToast = (msg, type) => {
     setToast({ msg, type });
@@ -115,32 +151,43 @@ export default function UploadResult() {
     handleFile(e.dataTransfer.files[0]);
   };
 
-  const handleUpload = () => {
-    if (!classVal || !exam) {
-      showToast("Please select class and exam.", "error");
-      return;
-    }
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      showToast("Results uploaded successfully!", "success");
-    }, 1600);
-  };
+
 
   const handleCancel = () => {
     setClassVal("");
     setExam("");
-    setSession("2023-24");
+    setSession("2025-26");
     setFile(null);
     setToast(null);
+
   };
+const onSubmit = (data) =>{
+    setLoading(true)
+    if (errors) {
+      showToast("Please fill all require field", "error")
+      
+    }
+    else{
+showToast("Form Submitted Successfully", "success");
+
+    }
+    setLoading(false)
+    console.log(data);
+    
+  }
+
+  const onError = () => {
+        toast.error("Please fill all required fields");
+      };
 
   return (
-    <div className=" min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-green-50 flex items-center justify-center px-10 py-40 h-screen fixed w-full overflow-y-auto ml-10">
-      <div className="w-full max-w-[520px] bg-white rounded-2xl shadow-xl shadow-teal-100/60 border border-teal-100 px-8 py-7 mt-[32rem]">
+    <div className=" w-full h-screen  bg-gradient-to-br from-teal-50 via-emerald-50 to-green-50 flex items-center justify-center px-10 pt-72  fixed  overflow-y-auto ">
+      <Toaster/>
+      <div className="w-full max-w-[520px] bg-white rounded-2xl shadow-xl shadow-teal-100/60 border border-teal-100 px-10 py-20 ">
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-7">
+        <div className="flex items-center justify-center gap-3 mb-7 relative">
+          <IoArrowBackCircle color="emrald" cursor={'pointer'} onClick={()=> navigate(-1)} size={40} className="absolute left-0 " />
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-700 flex items-center justify-center text-white text-xl shadow-md shadow-teal-200">
             <HiOutlineAcademicCap />
           </div>
@@ -148,57 +195,161 @@ export default function UploadResult() {
             Upload Result
           </h1>
         </div>
-
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         {/* Dropdowns */}
         <SelectField
+        {...register("course",{
+          required:"Course Name is require"
+        })}
           label="Class / Course"
-          value={classVal}
-          onChange={setClassVal}
+       onChange={(val) => setValue("course", val)}
+        
           options={CLASSES}
           placeholder="Select class / course"
         />
-
-        <SelectField
-          label="Course Duration"
-          value={exam}
-          onChange={setExam}
-          options={EXAMS}
+             {errors.course && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.course.message}
+          </p>
+        )}
+        <InputField
+         {...register("course_duration",{
+          required:"Course duration "
+         })}
+          label="Course Duration(In months)"
+           onChange={(val) => setValue("course_duration", val)}
+        
           placeholder="Course Duration"
         />
+              {errors.course_duration && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.course_duration.message}
+          </p>
+        )}
         <InputField
+        
           label="Year / Session (Ex-2026 0r 2025-26)"
-          value={session}
-          onChange={setSession}
-          options={SESSIONS}
+       
+           {...register("session",
+            {
+              required:"Session year is mandatory"
+            }
+           )}
+
+           onChange={(val) => setValue("session", val)}
+        
           placeholder="Select session"
         />
+
+             {errors.session && (
+          <p className="text-red-500 text-sm ">
+            {errors.session.message}
+          </p>
+        )}
         <InputField 
         label='Student Name'
         placeholder={'Enter Student Name'}
-        name={'student_name'}
+         {...register('student_name',
+          {
+            required:"Student Name is require"
+          }
+         )}
+         onChange={(val) =>{
+          setValue(
+            "student_name",
+            val.replace(/\b\w/g, (char) =>
+              char.toUpperCase()
+            )
+          )
+         }}
+       
         />
+
+        
+             {errors.student_name && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.student_name.message}
+          </p>
+        )}
+
          <InputField 
         label='Father Name'
         placeholder={'Enter Father Name'}
-        name={'father_name'}
+        {...register('father_name')}
+                 value={watch("father_name") || ""}
+  onChange={(val) => setValue("father_name", val)}
+       
         />
+              {errors.father_name && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.father_name.message}
+
+          </p>
+        )}
          <InputField 
         label='Total marks'
         placeholder={'Enter Total marks'}
-        name={'total_mark'}
+      
+        {...register('total_mark')}
+         value={watch("total_mark") || ""}
+  onChange={(val) => setValue("total_mark", val)}
         />
+            {errors.total_mark && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.total_mark.message}
+          </p>
+        )}
 
           <InputField 
         label='Obtain marks'
         placeholder={'Enter Obtain marks'}
-        name={'obtain_mark'}
+         {...register('obtain_mark')}
+           value={watch("obtain_mark") || ""}
+  onChange={(val) => setValue("obtain_mark", val)}
+      
         />
+        {errors.obtain_mark && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.obtain_mark.message}
+          </p>
+        )}
+
+           <InputField 
+        label='Percentage %'
+        placeholder={'Enter Student Percentage %'}
+           
+         {...register('percentage',
+          {
+            required:"Percentage"
+          }
+         )}
+         value={`${watch("percentage") || ""}`}
+          value={`${watch("percentage") || ""}%`}
+  readOnly
+       
+        />
+
+         {errors.percentage && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.percentage.message}
+          </p>
+        )}
+
 
                   <InputField 
         label='Grade'
         placeholder={'Enter Grade'}
-        name={'grade'}
+        {...register('grade')}
+      
         />
+
+        
+         {errors.grade && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.grade.message}
+          </p>
+        )}
+
 
 
 
@@ -212,7 +363,7 @@ export default function UploadResult() {
             onClick={() => fileRef.current.click()}
             onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
-            onDrop={handleDrop}
+            
             className={`rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all duration-200
               ${dragging
                 ? "border-teal-500 bg-teal-50"
@@ -252,61 +403,25 @@ export default function UploadResult() {
         {/* Result Preview */}
 
         
-        <p className="text-sm font-semibold text-gray-800 mb-2">Result Preview</p>
-        <div className="rounded-xl border border-teal-100 overflow-hidden mb-6">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-teal-50">
-                {["Roll No.", "Student Name", "Sub 1", "Sub 2", "Total", "Result"].map((h) => (
-                  <th
-                    key={h}
-                    className="px-3 py-2.5 text-left font-semibold text-teal-700 uppercase tracking-wide border-b border-teal-100 text-[11px]"
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {PREVIEW_DATA.map((row, i) => (
-                <tr
-                  key={row.roll}
-                  className={i % 2 === 1 ? "bg-gray-50/60" : "bg-white"}
-                >
-                  <td className="px-3 py-2.5 text-gray-700 border-b border-gray-100">{row.roll}</td>
-                  <td className="px-3 py-2.5 text-gray-800 font-medium border-b border-gray-100">{row.name}</td>
-                  <td className="px-3 py-2.5 text-gray-700 border-b border-gray-100">{row.sub1}</td>
-                  <td className="px-3 py-2.5 text-gray-700 border-b border-gray-100">{row.sub2}</td>
-                  <td className="px-3 py-2.5 text-gray-700 font-semibold border-b border-gray-100">{row.total}</td>
-                  <td className="px-3 py-2.5 border-b border-gray-100">
-                    {row.result === "Pass" ? (
-                      <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                        <FiCheckCircle className="text-xs" />
-                        Pass
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 bg-red-100 text-red-600 text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                        <FiXCircle className="text-xs" />
-                        Fail
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+       
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <button
-            onClick={handleCancel}
+          type="button"
+          
+            onClick={()=> reset()}
             className="py-2.5 rounded-xl border border-teal-200 bg-white text-teal-700 text-sm font-semibold hover:bg-teal-50 active:scale-95 transition-all duration-150"
           >
             Cancel
           </button>
           <button
-            onClick={handleUpload}
+         onClick={() => {
+    console.log(getValues());
+  }
+        }
+          
+           
             disabled={loading}
             className={`py-2.5 rounded-xl text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-150 active:scale-95
               ${loading
@@ -315,9 +430,12 @@ export default function UploadResult() {
               }`}
           >
             <FiUploadCloud className="text-base" />
-            {loading ? "Uploading..." : "Upload Result"}
+            {loading ? `Uploading... ${<Loaderspin/>}` : "Upload Result"}
           </button>
+        
         </div>
+        </form>
+        
 
         {/* Toast Notification */}
         {toast && (

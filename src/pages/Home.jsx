@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Button from '../components/Button';
 import { PiHandDepositDuotone, PiSailboat, PiStudent } from 'react-icons/pi';
 import { FaMoneyBill } from 'react-icons/fa';
@@ -20,11 +20,33 @@ import ChartHome from "../charts/Home Chart/Chart_home";
 import Piechart from "../charts/Piechart";
 import LabelPieChart from "../charts/Pie_withLabel";
 import DonutChart from "../charts/Donutchart";
+import { supabase_client } from "../utils/supabaseClient";
+
 
 const Home = () => {
    
     const [open, setOpen] = useState(0);
     const navigate = useNavigate()
+    const [chartdata, setChartdata] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+      
+   fetchData()
+ 
+    }, []);
+
+    const fetchData = async () =>{
+
+     const { data, error } = await supabase_client
+     .from("register_students")
+     .select("s_name, deposit_fee")
+     setChartdata(data)
+     setLoading(false)
+
+    }
+
+    
     
     const selectRef = useRef()
       const options = [
@@ -120,23 +142,23 @@ const Home = () => {
         gap-6 
         w-full"
       >
-        <div className="w-full overflow-x-auto flex justify-center">
-          <Barchart width={600} height={250} />
+        <div className="w-full h-full overflow-x-auto flex justify-center">
+          <Barchart data_is={chartdata} Xdata="s_name" barData="deposit_fee" width={700} height={250} />
         </div>
 
        
 
         
          <div className="w-full flex justify-center">
-          <Piechart />
+          <Piechart data_is={chartdata} data_key="deposit_fee" name_key="s_name" />
         </div>
 
         <div className="w-full flex justify-center">
-          <LabelPieChart/>
+          <LabelPieChart data_is={chartdata} data_key={"deposit_fee"}  />
         </div>
 
           <div className="w-full flex justify-center">
-          <DonutChart/>
+          <DonutChart data_is={chartdata} data_Key="deposit_fee" name_Key="s_name" />
         </div>
       </div>
     </div>

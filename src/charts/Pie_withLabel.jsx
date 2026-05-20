@@ -16,14 +16,20 @@ const data = [
 ];
 
 const COLORS = [
-  "#E8742E", // orange
+ "#E8742E", // orange
   "#187A24", // dark green
   "#2196C9", // blue
   "#9C2AA0", // purple
   "#4CAB29", // green
+  "#F44336", // red
+  "#FFC107", // amber
+  "#3F51B5", // indigo
+  "#009688", // teal
+  "#795548", // brown
+  "#00008B",
 ];
 
-const LabelPieChart = () => {
+const LabelPieChart = ({data_is = data, data_key = "value"  }) => {
   return (
     <div className="w-full max-w-xl mx-auto  rounded-xl p-4 sm:p-6">
       
@@ -38,16 +44,16 @@ const LabelPieChart = () => {
           
           <PieChart>
             <Pie
-              data={data}
+              data={data_is}
               cx="50%"
               cy="45%"
               outerRadius={95}
               innerRadius={0}
-              dataKey="value"
+              dataKey={data_key}
               stroke="#ffffff"
               strokeWidth={3}
             >
-              {data.map((entry, index) => (
+              {data_is.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -64,7 +70,7 @@ const LabelPieChart = () => {
       {/* Custom Legend */}
       <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-2 text-sm">
         
-        {data.map((item, index) => (
+        {data_is.map((item, index) => (
           <div key={index} className="flex items-center gap-2">
             
             <div
@@ -75,7 +81,7 @@ const LabelPieChart = () => {
             ></div>
 
             <span className="text-gray-600">
-              {item.name}
+              {item.s_name}
             </span>
           </div>
         ))}

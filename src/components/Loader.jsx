@@ -1,12 +1,12 @@
 import React from 'react';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const Loader = () => {
+const Loaderspin = () => {
     return (
         <div className='absolute right-10 '>
-      <AiOutlineLoading3Quarters  color='white'  className=" animate-spin text-blue-500 " />
+      <AiOutlineLoading3Quarters  color='white'  className=" animate-spin text-white " size={40} />
     </div>
     );
 }
 
-export default Loader;
+export default Loaderspin;

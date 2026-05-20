@@ -7,16 +7,25 @@ import Report from './pages/Report'
 import Setting from './pages/Setting'
 import Profile from './pages/Profile'
 
+
 import AOS from 'aos';
 import 'aos/dist/aos.css'
+import HeroSection from './pages/Alter/Landing/Herosection';
+import GlassLoginPage from './pages/Alter/Login/Login_page';
+
 
 const App = () => {
 
   AOS.init();
   return (
-    <div className='grid gap-2 grid-cols-2 grid-rows-1'>
-      <Dashboard/>
-   
+    <div className='w-full h-screen'>
+      
+     
+   <Routes>
+    <Route path='/' element = <HeroSection/>/>
+     <Route path='/Dashboard/*' element =  <Dashboard/>/>
+     <Route path='/Login' element = <GlassLoginPage/> />
+   </Routes>
     
        
      

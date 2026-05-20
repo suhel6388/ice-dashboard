@@ -21,21 +21,25 @@ const Dashboard = () => {
     
     return (
         <div className='flex flex-row w-full  h-fit justify-center item-center  fixed z-0 inset-0 bg-white'
-     
+
         >
             <Sidebar/>
                      <div  className='w-full h-screen flex justify-center'>
                      <Routes>
-        <Route path='/' element = {<Home/>} />
-        <Route path='/alter' element = {<Alter/>} />
-        <Route path='/report' element = {<Report/>} />
-        <Route path='/setting' element = {<Setting/>} />
-        <Route path='/profile' element = {<Profile/>} />
-      
-        <Route path='/Corner' element =  {<QuickActions/>} />
-         <Route path="/Corner/add-expense" element={<AddExpense />} />
-         <Route path="/Corner/view_student" element={<Studentview />} />
-          <Route path="/Corner/add_result" element={<UploadResult />} />
+       
+      <Route path="Home" element={<Home />} />
+
+      <Route path="alter" element={<Alter />} />
+
+      <Route path="report" element={<Report />} />
+
+      <Route path="setting" element={<Setting />} />
+
+      <Route path="profile" element={<Profile />} />
+
+      <Route path="Corner/*" element={<QuickActions />} />
+
+   
          
 
             

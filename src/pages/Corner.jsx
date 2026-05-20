@@ -14,11 +14,16 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Corner card/Card";
-import Addstudent from "../components/Addstudent";
+
 import FeesAdd from "../components/Fees_Add";
 
 
 
+import Addstudent from '../components/Addstudent';
+import AddExpense from "./Quick Actions/AddExpense";
+
+import UploadResult from './Viewresult';
+import Studentview from './Quick Actions/Student_view';
 
 const QuickActions = () => {
   const [isopen, setIsopen] = useState(0);
@@ -92,6 +97,11 @@ const QuickActions = () => {
   
   return (
     <div className="bg-gray-50 min-h-screen p-6 px-10">
+            <Routes>
+                    <Route path="add-expense" element={<AddExpense />} />
+                       <Route path="view_student" element={<Studentview />} />
+                        <Route path="add_result" element={<UploadResult />} />
+            </Routes>
        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
 
       <div  className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 bg-white border-[#FFA500] h-50 shadow-md rounded-md px-5 py-10">
@@ -101,11 +111,11 @@ const QuickActions = () => {
                     {/* add fee  */}
                     <Card onClick={() => setIsopen('fee_add')} icon={actions[1].icon} icon_bg={actions[1].bg} title={actions[1].title} desc={actions[1].desc} />
                      {/* ALTER fee  */}
-                    <Card icon={actions[2].icon} icon_bg={actions[2].bg} title={actions[2].title} desc={actions[2].desc} onClick={()=> navigate("/alter")} />
+                    <Card icon={actions[2].icon} icon_bg={actions[2].bg} title={actions[2].title} desc={actions[2].desc} onClick={()=> navigate("/Dashboard/alter")} />
             
-<Card icon={actions[3].icon} icon_bg={actions[3].bg} title={actions[3].title} desc={actions[3].desc} onClick={()=> navigate("/Corner/add-expense")} />
-<Card icon={actions[4].icon} icon_bg={actions[4].bg} title={actions[4].title} desc={actions[4].desc} onClick={()=> navigate("/Corner/add_result")} />
-<Card icon={actions[5].icon} icon_bg={actions[5].bg} title={actions[5].title} desc={actions[5].desc} onClick={()=> navigate("/Corner/view_student")} />
+<Card icon={actions[3].icon} icon_bg={actions[3].bg} title={actions[3].title} desc={actions[3].desc} onClick={()=> navigate("add-expense")} />
+<Card icon={actions[4].icon} icon_bg={actions[4].bg} title={actions[4].title} desc={actions[4].desc} onClick={()=> navigate("add_result")} />
+<Card icon={actions[5].icon} icon_bg={actions[5].bg} title={actions[5].title} desc={actions[5].desc} onClick={()=> navigate("view_student")} />
 <Card icon={actions[6].icon} icon_bg={actions[6].bg} title={actions[6].title} desc={actions[6].desc} />
 <Card icon={actions[7].icon} icon_bg={actions[7].bg} title={actions[7].title} desc={actions[7].desc} />
 <Card icon={actions[8].icon} icon_bg={actions[8].bg} title={actions[8].title} desc={actions[8].desc} />

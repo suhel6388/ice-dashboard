@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
+import { ResponsiveContainer } from 'recharts';
 
 
 const CustomTooltipBar = ({ active, payload, label }) => {
@@ -20,15 +21,6 @@ const CustomTooltipBar = ({ active, payload, label }) => {
     );
   }
   return null;
-};
-
-
-const Barchart = ({data_is, height = 200, width=700, Xdata = 'st_name', barData = 'amount', fill = 'orange' }) => {
-  const margin = {
-  top: 10,
-  right: 30,
-  left: 20,
-  bottom: 5,
 };
 
 const data = [
@@ -75,9 +67,21 @@ const data = [
 
 
 ]
+
+
+const Barchart = ({data_is =data, height = 200, width=700, Xdata = 'st_name', barData = 'amount', fill = 'orange' }) => {
+  const margin = {
+  top: 10,
+  right: 30,
+  left: 20,
+  bottom: 5,
+};
+
+
   return (
     <>
-    <BarChart width={width } height={height} data={data} margin={margin}
+    <ResponsiveContainer width="100%" height="100%">
+    <BarChart width={width } height={height} data={data_is}  margin={margin} 
 
      >
 
@@ -101,12 +105,14 @@ const data = [
 <Bar
  dataKey={barData} fill={fill} barSize={30} radius={[6, 6, 0, 0]
   
+  
 }
 
  />
       <RechartsDevtools />
        <RechartsDevtools />
     </BarChart>
+    </ResponsiveContainer>
     </>
   );
 }

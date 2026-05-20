@@ -61,7 +61,7 @@ const Sidebar = () => {
                 <li 
                 
                 onClick={()=>{
-                    navigate('/')
+                    navigate('/Dashboard/Home')
                     setActive('home')
                 }}
                 className={`flex justify-center items-center cursor-pointer
@@ -73,7 +73,7 @@ const Sidebar = () => {
                 
                    <li 
                  onClick={()=>{
-                     navigate('/Corner')
+                     navigate('/Dashboard/Corner')
                     setActive('corner')
                 }}
                 className={`flex gap-2 justify-center items-center cursor-pointer
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
                 <li 
                 onClick={()=>{
-                     navigate('/alter')
+                     navigate('/Dashboard/alter')
                     setActive('alter')
                 }}
                 className={`flex gap-2 justify-center items-center cursor-pointer
@@ -100,7 +100,7 @@ const Sidebar = () => {
 
                   <li 
                  onClick={()=>{
-                     navigate('/report')
+                     navigate('/Dashboard/report')
                     setActive('report')
                 }}
                 className={`flex gap-2 justify-center items-center cursor-pointer
@@ -114,7 +114,7 @@ const Sidebar = () => {
               
 
                 <li  onClick={()=>{
-                     navigate('/setting')
+                     navigate('/Dashboard/setting')
                     setActive('setting')
                 }}
                 className={`flex gap-2 justify-center items-center cursor-pointer
@@ -123,7 +123,7 @@ const Sidebar = () => {
                  ${active === "setting" ? "bg-[#303030]" : "bg-none"}
                  `}> <IoMdSettings /> {!navopen && <span>Setting</span>} </li>
                 <li  onClick={()=>{
-                    navigate("/profile")
+                    navigate("/Dashboard/profile")
                     setActive('profile')
                 }}
                 className={`  flex gap-2 justify-center items-center cursor-pointer

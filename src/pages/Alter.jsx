@@ -30,7 +30,7 @@ const navigate  = useNavigate()
     <div className="p-6 bg-gray-100 min-h-screen h-96 overflow-y-auto ">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 ">
-        <h1 className="text-2xl font-semibold flex justify-center items-center gap-6">  <IoArrowBackCircle color="blue" cursor={'pointer'} onClick={()=> navigate(-1)} size={40}/>Alter Student</h1>
+        <h1 className="text-2xl font-semibold flex justify-center items-center gap-6">  <IoArrowBackCircle color="blue" cursor={'pointer'} onClick={()=> navigate(-1)} size={40}/> Alter Student</h1>
         <div className="flex items-center gap-4">
           <div className="flex items-center bg-white px-3 py-2 rounded-lg shadow">
             <FiSearch />
