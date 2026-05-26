@@ -21,6 +21,7 @@ import Piechart from "../charts/Piechart";
 import LabelPieChart from "../charts/Pie_withLabel";
 import DonutChart from "../charts/Donutchart";
 import { supabase_client } from "../utils/supabaseClient";
+import LoadingSpinner from "../components/Loadingspiner";
 
 
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
     }, []);
 
     const fetchData = async () =>{
-
+      setLoading(true)
      const { data, error } = await supabase_client
      .from("register_students")
      .select("s_name, deposit_fee")
@@ -83,7 +84,9 @@ const Home = () => {
         </span>
       </p>
     </div>
-
+{loading === true &&(
+  <LoadingSpinner/>
+)}
     {/* Cards */}
     <div
       className="grid 

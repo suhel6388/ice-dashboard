@@ -18,6 +18,7 @@ import LoadingSpinner from "../components/Loadingspiner";
 
 export default function Alter() {
   const [loading, setLoading] = useState(false);
+  
 const [isopen, setIsopen] = useState("");
 
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const [isopen, setIsopen] = useState("");
 
       {/* Header */}
       <div className="bg-white rounded-2xl shadow p-5 mb-6">
+        
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 

@@ -121,6 +121,8 @@ const QuickActions = () => {
 <Card icon={actions[8].icon} icon_bg={actions[8].bg} title={actions[8].title} desc={actions[8].desc} />
 <Card icon={actions[9].icon} icon_bg={actions[9].bg} title={actions[9].title} desc={actions[9].desc} />
       </div>
+     
+   
        {isopen === 'register' &&(
                         <Addstudent close={()=> setIsopen('')} />
                     )}

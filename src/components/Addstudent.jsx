@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Loader from './Loader';
 import generateStudentID from '../components/Student_id'
+import LoadingSpinner from './Loadingspiner';
 
 
 
@@ -106,16 +107,7 @@ const Addstudent = ({ close }) => {
            <div className="fixed inset-0 z-50 flex  justify-center bg-black/40 backdrop-blur-sm h-[200vh]">
 
       <div className="flex flex-col items-center gap-3 fixed top-60">
-
-        <AiOutlineLoading3Quarters
-          color="white"
-          className="animate-spin"
-          size={40}
-        />
-
-        <p className="text-white text-lg font-semibold">
-          Loading...
-        </p>
+        <LoadingSpinner/>
 
       </div>
 

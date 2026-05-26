@@ -1,9 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+
+import React, { useState, useEffect } from 'react';
 import { GrClose } from "react-icons/gr";
-import { FaCalendarAlt } from "react-icons/fa";
-import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
-import { supabase_client } from "../utils/supabaseClient";
+import { supabase_client  } from '../utils/supabaseClient';
+import toast, { Toaster } from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import Loader from './Loader';
+import generateStudentID from '../components/Student_id'
+import LoadingSpinner from './Loadingspiner';
 
 const FeesAdd = ({ close }) => {
 

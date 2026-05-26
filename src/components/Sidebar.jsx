@@ -12,14 +12,28 @@ import Setting from '../pages/Setting'
 import Profile from '../pages/Profile'
 import { LuLogOut } from 'react-icons/lu';
 import { PiStudentBold } from "react-icons/pi";
+import { supabase_client } from '../utils/supabaseClient';
+import ConfirmCard from './Confirmcaards';
 
 
 
 
-const Sidebar = () => {
+const Sidebar = ({setPromise}) => {
     const navigate = useNavigate()
     const [navopen, setNavopen] = useState(true);
+  
+
     const [active, setActive] = useState("home");
+    const [signout, setSignout] = useState(false);
+ const Signout = async () => {
+  const { error } = await supabase_client.auth.signOut();
+
+  if (error) {
+    console.log(error.message);
+  } else {
+    navigate("/");
+  }
+};
   
     return (
         <div 
@@ -116,6 +130,8 @@ const Sidebar = () => {
                 <li  onClick={()=>{
                      navigate('/Dashboard/setting')
                     setActive('setting')
+                  
+                    
                 }}
                 className={`flex gap-2 justify-center items-center cursor-pointer
                  active:bg-[#303030]  hover:bg-[#303030] px-5 py-2 rounded 
@@ -125,6 +141,7 @@ const Sidebar = () => {
                 <li  onClick={()=>{
                     navigate("/Dashboard/profile")
                     setActive('profile')
+                      
                 }}
                 className={`  flex gap-2 justify-center items-center cursor-pointer
                  active:bg-[#303030]  hover:bg-[#303030] px-5 py-2 rounded
@@ -132,9 +149,12 @@ const Sidebar = () => {
                  ${active === "profile" ? "bg-[#303030]" : "bg-none"}
 
                  `}><CgProfile/>{!navopen && <span>Profile</span>} </li>
+                 
                   <li  onClick={()=>{
                   
-                    setActive('logout')
+                    setActive('logout'),
+                    setPromise(true)
+                    
                 }}
 
                 className={`  flex gap-2 justify-center items-center cursor-pointer
@@ -146,7 +166,7 @@ const Sidebar = () => {
 
 
             </ul>
-   
+           
         </div>
     );
 }
