@@ -30,12 +30,118 @@ const Home = () => {
     const navigate = useNavigate()
     const [chartdata, setChartdata] = useState([]);
     const [loading, setLoading] = useState(true);
+  const [totaldeposit, setTotaldeposit] = useState();
+  const [weekly, setWeekly] = useState();
+  const [today, setToday] = useState();
     
     useEffect(() => {
       
    fetchData()
+   fetchMonthData()
+   fetchWeeklyDeposit()
+fetchTodayDeposit()
  
     }, []);
+    const fetchMonthData = async () => {
+
+  const today = new Date();
+
+  const lastMonth = new Date();
+  lastMonth.setMonth(today.getMonth() - 1);
+
+  const { data, error } = await supabase_client
+    .from("register_students")
+    .select("*")
+    .gte("add_date", lastMonth.toISOString());
+
+  if (error) {
+    console.log(error);
+  } else {
+
+    // Total Course Fee
+    const totalCourseFee = data.reduce(
+      (sum, student) => sum + Number(student.course_fee || 0),
+      0
+    );
+
+    // Total Deposit Fee
+    const totalDepositFee = data.reduce(
+      (sum, student) => sum + Number(student.deposit_fee || 0),
+      0
+    );
+    setTotaldeposit(totalDepositFee)
+
+    // Total Due Fee
+    const totalDueFee = data.reduce(
+      (sum, student) => sum + Number(student.due_fee || 0),
+      0
+    );
+
+    console.log("Total Course Fee:", totalCourseFee);
+
+    console.log("Total Deposit Fee:", totalDepositFee);
+
+    console.log("Total Due Fee:", totalDueFee);
+  }
+};
+
+const fetchWeeklyDeposit = async () => {
+
+  // Last 7 Days Date
+  const lastWeek = new Date();
+  lastWeek.setDate(lastWeek.getDate() - 7);
+
+  // Fetch Data
+  const { data, error } = await supabase_client
+    .from("register_students")
+    .select("deposit_fee")
+    .gte("add_date", lastWeek.toISOString());
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  // Total Weekly Deposit
+  const weeklyDeposit = data.reduce(
+    (sum, item) => sum + Number(item.deposit_fee || 0),
+    0
+  );
+
+  setWeekly(weeklyDeposit)
+
+  console.log("Weekly Deposit:", weeklyDeposit);
+};
+const fetchTodayDeposit = async () => {
+
+  // Today's Start Time
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Fetch Today's Data
+  const { data, error } = await supabase_client
+    .from("register_students")
+    .select("deposit_fee")
+    .gte("add_date", today.toISOString());
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  // Total Today's Deposit
+  const todayDeposit = data.reduce(
+    (sum, item) => sum + Number(item.deposit_fee || 0),
+    0
+  );
+  setToday(todayDeposit)
+
+  console.log("Today Deposit:", todayDeposit);
+
+  // Optional State
+  // setTodayDeposit(todayDeposit);
+};
+
 
     const fetchData = async () =>{
       setLoading(true)
@@ -44,6 +150,7 @@ const Home = () => {
      .select("s_name, deposit_fee")
      setChartdata(data)
      setLoading(false)
+
 
     }
 
@@ -98,20 +205,20 @@ const Home = () => {
     >
       <Carddashboard
         title={"Monthly Deposit "}
-        amount_value={"₹ 8,000"}
+        amount_value={totaldeposit}
         icon={<SiDepositphotos />}
         
       />
 
       <Carddashboard
         title={"Weekly Deposit "}
-        amount_value={"₹ 5,000"}
+        amount_value={weekly}
         icon={<SiDepositphotos />}
       />
 
       <Carddashboard
         title={"Today Deposit "}
-        amount_value={"₹ 1,000"}
+        amount_value={today}
         icon={<PiStudentDuotone />}
       />
 
