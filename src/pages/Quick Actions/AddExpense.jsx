@@ -3,9 +3,20 @@ import { FiUploadCloud } from "react-icons/fi";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
+import { useForm } from 'react-hook-form';
 const AddExpense = () => {
-    const navigate =useNavigate()
+    const {
+      register,
+      handleSubmit,
+      watch,
+      setValue,
+      reset,
+      formState: { errors },
+    } = useForm();
+
+
+
+    const navigate = useNavigate() 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center  overflow-y-auto  ">
       <div className="bg-white w-full max-w-3xl rounded-2xl shadow-md p-6  space-y-5">
@@ -84,17 +95,6 @@ const AddExpense = () => {
           ></textarea>
         </div>
 
-        {/* Upload */}
-        <div>
-          <label className="text-sm text-gray-600">Upload Receipt</label>
-          <div className="mt-2 border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center text-gray-500 cursor-pointer hover:border-purple-500">
-            <FiUploadCloud className="text-3xl text-purple-500 mb-2" />
-            <p>Click to upload or drag and drop</p>
-            <span className="text-xs">
-              JPG, PNG, PDF up to 5MB
-            </span>
-          </div>
-        </div>
 
         {/* Buttons */}
         <div className="flex justify-end gap-3 pt-4">
@@ -110,5 +110,7 @@ const AddExpense = () => {
     </div>
   );
 };
+
+
 
 export default AddExpense;

@@ -6,12 +6,16 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Loader from './Loader';
+
+
+
+
 import generateStudentID from '../components/Student_id'
 import LoadingSpinner from './Loadingspiner';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 const FeesAdd = ({ close }) => {
 
-  const dateRef = useRef(null);
 
   const {
     register,
@@ -21,6 +25,9 @@ const FeesAdd = ({ close }) => {
     reset,
     formState: { errors },
   } = useForm();
+
+
+  
 
   const studentID = watch("student_id");
 
@@ -345,7 +352,7 @@ const FeesAdd = ({ close }) => {
             </label>
 
             <input
-              ref={dateRef}
+             
               {...register("date", {
                 required: "Date is required",
               })}

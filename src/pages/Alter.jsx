@@ -15,6 +15,7 @@ import { supabase_client } from "../utils/supabaseClient";
 import Addstudent from "../components/Addstudent";
 import FeesAdd from "../components/Fees_Add";
 import LoadingSpinner from "../components/Loadingspiner";
+import UpdateStudent from "./Alter/UpdateStudent";
 
 export default function Alter() {
   const [loading, setLoading] = useState(false);
@@ -98,6 +99,7 @@ const [isopen, setIsopen] = useState("");
               className="text-blue-600 cursor-pointer"
               onClick={() => navigate(-1)}
             />
+    
 
             <div className="flex items-center gap-3">
 
@@ -153,14 +155,21 @@ const [isopen, setIsopen] = useState("");
 
       </div>
 
+
+        {isopen === "update" &&(
+          <UpdateStudent close={()=> setIsopen("")}/>
+        )}
+      
       {/* Table */}
-      <div className="bg-white rounded-2xl shadow overflow-hidden">
+
+
+        <div className="bg-white rounded-2xl shadow overflow-hidden">
 
         <div className="overflow-x-auto">
           {loading === true &&(
             <LoadingSpinner/>
           )}
-
+        
           <table className="w-full text-sm text-left">
 
             <thead className="bg-blue-600 text-white">
@@ -227,7 +236,8 @@ const [isopen, setIsopen] = useState("");
                         {/* Edit */}
                         <button
                           onClick={() =>
-                            navigate(`/alter-student/${student.student_id}`)
+                            // navigate(`/alter-student/${student.student_id}`)
+                            setIsopen("update")
                           }
                           className="bg-blue-100 hover:bg-blue-200 text-blue-600 p-2 rounded-lg transition"
                         >
