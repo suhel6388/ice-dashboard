@@ -293,6 +293,36 @@ const Addstudent = ({ close }) => {
               <p className="text-red-500">{errors.course.message}</p>
             )}
           </div>
+
+
+              {/* Course duration*/}
+       <div className="flex flex-col">
+  <label className="text-xl mb-1 text-gray-200">
+    Course Duration
+  </label>
+
+  <select
+    {...register("course_duration", {
+      required: "Course duration is required",
+    })}
+    className="glass-input text-gray-400 px-5 py-1 rounded-md outline-none bg-transparent border-2"
+  >
+    <option value="">Select Duration</option>
+    <option value="1 Month">1 Month</option>
+    <option value="3 Months">3 Months</option>
+    <option value="6 Months">6 Months</option>
+    <option value="1 Year">1 Year</option>
+    <option value="2 Years">2 Years</option>
+  </select>
+
+  {errors.course_duration && (
+    <p className="text-red-500">
+      {errors.course_duration.message}
+    </p>
+  )}
+</div>
+
+
           {/* Admision fee */}
           <div className="flex flex-col">
             <label className="text-xl mb-1 text-gray-200">Admision Fee</label>
@@ -358,7 +388,7 @@ const Addstudent = ({ close }) => {
             <label className="text-xl mb-1 text-gray-200">Due Fee</label>
             <input
               readOnly
-              onChange={(e) => setValue("course_fee", e.target.value)}
+              onChange={(e) => setValue("due_fee", e.target.value)}
               {...register("due_fee", { required: "Due fee is require" })}
               value={due}
               type="number" className="glass-input text-gray-400 px-5 py-1 rounded-md outline-none bg-transparent border-2" />
