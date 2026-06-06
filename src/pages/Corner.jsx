@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { CgCalendarDue } from "react-icons/cg";
+
 import {
   UserPlus,
   Wallet,
@@ -24,6 +26,7 @@ import AddExpense from "./Quick Actions/AddExpense";
 
 import UploadResult from './Viewresult';
 import Studentview from './Quick Actions/Student_view';
+import DueInstallments from "./Quick Actions/DueInstallments";
 
 const QuickActions = () => {
   const [isopen, setIsopen] = useState(0);
@@ -87,9 +90,9 @@ const QuickActions = () => {
     bg: "bg-purple-100 text-purple-600",
   },
   {
-    title: "Academic Calendar",
-    desc: "View academic calendar",
-    icon: <CalendarDays size={22} />,
+    title: "Due  installment",
+    desc: "View due installment",
+    icon: <CgCalendarDue size={22} />,
     bg: "bg-teal-100 text-teal-600",
   },
 ];
@@ -101,6 +104,7 @@ const QuickActions = () => {
                     <Route path="add-expense" element={<AddExpense />} />
                        <Route path="view_student" element={<Studentview />} />
                         <Route path="add_result" element={<UploadResult />} />
+                             <Route path="due_mstallments" element={<DueInstallments/>} />
             </Routes>
        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
 
@@ -119,7 +123,8 @@ const QuickActions = () => {
 <Card icon={actions[6].icon} icon_bg={actions[6].bg} title={actions[6].title} desc={actions[6].desc} />
 <Card icon={actions[7].icon} icon_bg={actions[7].bg} title={actions[7].title} desc={actions[7].desc} />
 <Card icon={actions[8].icon} icon_bg={actions[8].bg} title={actions[8].title} desc={actions[8].desc} />
-<Card icon={actions[9].icon} icon_bg={actions[9].bg} title={actions[9].title} desc={actions[9].desc} />
+<Card icon={actions[9].icon} icon_bg={actions[9].bg} title={actions[9].title} desc={actions[9].desc} onClick={()=> navigate("due_mstallments")} />
+
       </div>
      
    

@@ -69,7 +69,7 @@ const Addstudent = ({ close }) => {
       const { error } = await supabase_client 
         .from('register_students')
         .insert([data])
-      console.log(data);
+
 
       if (error) {
         toast.error(error.message, {
@@ -97,6 +97,7 @@ const Addstudent = ({ close }) => {
   const onError = () => {
     toast.error("Please fill all required fields ⚠️");
   };
+
 
   return (
     <div data-aos='zoom-in' className="min-h-screen fixed inset-0 z-50 flex items-center justify-center 
@@ -286,6 +287,7 @@ const Addstudent = ({ close }) => {
               <option value="MS OFFICE" />
               <option value="PYTHON" />
               <option value="WEB DESIGN" />
+                 <option value="O LEVEL" />
             </datalist>
             {errors.course && (
               <p className="text-red-500">{errors.course.message}</p>
