@@ -27,6 +27,7 @@ import AddExpense from "./Quick Actions/AddExpense";
 import UploadResult from './Viewresult';
 import Studentview from './Quick Actions/Student_view';
 import DueInstallments from "./Quick Actions/DueInstallments";
+import ExpenseDashboard from "./Quick Actions/View_Expense";
 
 const QuickActions = () => {
   const [isopen, setIsopen] = useState(0);
@@ -105,6 +106,7 @@ const QuickActions = () => {
                        <Route path="view_student" element={<Studentview />} />
                         <Route path="add_result" element={<UploadResult />} />
                              <Route path="due_mstallments" element={<DueInstallments/>} />
+                             <Route path="view_expense" element={<ExpenseDashboard/>} />
             </Routes>
        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
 
@@ -120,8 +122,8 @@ const QuickActions = () => {
 <Card icon={actions[3].icon} icon_bg={actions[3].bg} title={actions[3].title} desc={actions[3].desc} onClick={()=> navigate("add-expense")} />
 <Card icon={actions[4].icon} icon_bg={actions[4].bg} title={actions[4].title} desc={actions[4].desc} onClick={()=> navigate("add_result")} />
 <Card icon={actions[5].icon} icon_bg={actions[5].bg} title={actions[5].title} desc={actions[5].desc} onClick={()=> navigate("view_student")} />
-<Card icon={actions[6].icon} icon_bg={actions[6].bg} title={actions[6].title} desc={actions[6].desc} />
-<Card icon={actions[7].icon} icon_bg={actions[7].bg} title={actions[7].title} desc={actions[7].desc} />
+<Card icon={actions[6].icon} icon_bg={actions[6].bg} title={actions[6].title} desc={actions[6].desc}  />
+<Card icon={actions[7].icon} icon_bg={actions[7].bg} title={actions[7].title} desc={actions[7].desc} onClick={()=> navigate("view_expense")}/>
 <Card icon={actions[8].icon} icon_bg={actions[8].bg} title={actions[8].title} desc={actions[8].desc} />
 <Card icon={actions[9].icon} icon_bg={actions[9].bg} title={actions[9].title} desc={actions[9].desc} onClick={()=> navigate("due_mstallments")} />
 
