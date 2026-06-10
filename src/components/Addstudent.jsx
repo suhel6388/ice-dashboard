@@ -7,6 +7,7 @@ import Loader from './Loader';
 import generateStudentID from '../components/Student_id';
 import LoadingSpinner from './Loadingspiner';
 import generateInstallments from '../utils/functions/generateInstallments';
+import Installmentupdate from '../utils/functions/Payinstallment';
 
 const Addstudent = ({ close }) => {
 
@@ -65,10 +66,11 @@ const Addstudent = ({ close }) => {
         if (data.no_of_installment && Number(data.no_of_installment) > 0) {
           await generateInstallments(
             data.student_id,
+            data.s_name,
             parseInt(data.no_of_installment)
           );
         }
-
+          Installmentupdate(data.student_id, Number(data.deposit_fee))
         reset();
         // Reload a new student ID after reset
         const newId = await generateStudentID();

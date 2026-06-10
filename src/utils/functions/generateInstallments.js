@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { supabase_client } from "../supabaseClient";
 
-async function generateInstallments(studentId, installmentCount) {
+async function generateInstallments(studentId,studentName, installmentCount) {
   try {
     const { data: student, error } = await supabase_client
       .from("register_students")
@@ -30,6 +30,7 @@ async function generateInstallments(studentId, installmentCount) {
 
     if (existing && existing.length > 0) {
       console.warn("Installments already exist for this student, skipping...");
+      toast.error("Installments already exist for this student, skipping...")
       return; // silent skip — no error shown to user
     }
 
@@ -42,11 +43,13 @@ async function generateInstallments(studentId, installmentCount) {
       dueDate.setMonth(dueDate.getMonth() + (i - 1));
 
       installments.push({
-        student_id: student.student_id,
+      
+        student_id: studentId,
+        s_name:studentName,
         installment_no: i,
         due_date: dueDate.toISOString().split("T")[0],
         amount: amount,
-        status: "Upcoming",
+     
       });
     }
 

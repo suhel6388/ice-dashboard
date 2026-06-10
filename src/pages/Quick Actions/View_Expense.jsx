@@ -15,6 +15,8 @@ import {
 } from "recharts";
 
 import { FaPlus } from "react-icons/fa";
+import LoadingSpinner from "../../components/Loadingspiner";
+import BackButton from "../../components/Backbutton";
 
 const COLORS = [
   "#3B82F6",
@@ -150,6 +152,9 @@ export default function ExpenseDashboard() {
 
   return (
     <div className="min-h-screen h-screen bg-slate-50 p-4 md:p-6 overflow-y-auto overflow-x-auto">
+        {loading === true &&(
+            <LoadingSpinner/>
+        )}
 
       <div className="max-w-7xl mx-auto">
 
@@ -158,7 +163,8 @@ export default function ExpenseDashboard() {
         <div className="flex flex-col lg:flex-row justify-between gap-4 mb-6">
 
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-3xl font-bold text-slate-900 flex gap-4 justify-center items-center">
+                <BackButton />
               Expense Tracker
             </h1>
 

@@ -13,6 +13,7 @@ import Loader from './Loader';
 import generateStudentID from '../components/Student_id'
 import LoadingSpinner from './Loadingspiner';
 import { FaCalendarAlt } from 'react-icons/fa';
+import Installmentupdate from '../utils/functions/Payinstallment';
 
 const FeesAdd = ({ close }) => {
 
@@ -30,6 +31,7 @@ const FeesAdd = ({ close }) => {
   
 
   const studentID = watch("student_id");
+  const Feeamount = watch("fee_amt")
 
   const [loading, setLoading] = useState(false);
 
@@ -179,11 +181,13 @@ const FeesAdd = ({ close }) => {
         .eq("student_id", formData.student_id);
 
       toast.dismiss(toastId);
+      Installmentupdate(studentID, Number(feeAmount))
       reset()
 
       if (updateError) {
 
         toast.error(updateError.message);
+
 
         setLoading(false);
 
@@ -198,7 +202,7 @@ const FeesAdd = ({ close }) => {
 
       toast.dismiss(toastId);
 
-      toast.error("Something went wrong");
+      toast.error("Something went wrong!");
 
       console.log(error);
 
